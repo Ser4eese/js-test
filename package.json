@@ -1,0 +1,26 @@
+{
+  "name": "js-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@vitest/ui": "^3.0.8",
+    "jsdom": "^26.0.0",
+    "vitest": "^3.0.8"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "happy-dom": "^17.4.4",
+    "sqlite3": "^5.1.7",
+    "undici": "^7.5.0"
+  }
+}

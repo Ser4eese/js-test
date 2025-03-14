@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Регистрация</title>
+</head>
+<body>
+  <h1>Регистрация</h1>
+  <form id="registerForm">
+    <label for="login">Логин:</label>
+    <input type="text" id="login" required>
+    <br>
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" required>
+    <br>
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      //собрать данные
+
+      const response = await fetch('http://localhost:3003/register', {
+        method: ''/** указать метод */,
+        headers: { /** указать заголовок */ },
+        body: ''/** в теле передать собранные данные */,
+      });
+
+      if (response.ok) {
+        alert('Пользователь зарегистрирован!');
+      } else {
+        alert('Ошибка регистрации');
+      }
+    });
+  </script>
+</body>
+</html>
