@@ -1,4 +1,4 @@
-# Задание 3: Async/Await
+# Async/Await
 
 Напишите функцию `fetchUserData`, которая:
 1. Использует `fetch` для запроса к `https://api.example.com/users/1`.
