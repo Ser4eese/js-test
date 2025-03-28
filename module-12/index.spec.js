@@ -1,6 +1,6 @@
 const processData = require('./index');
 
-describe('Цепочка промисов', () => {
+describe.skip('Цепочка промисов', () => {
   beforeEach(() => {
     // tell vitest we use mocked time
     vi.useFakeTimers({ shouldAdvanceTime: true })

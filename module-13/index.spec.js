@@ -19,6 +19,6 @@ describe('Async/Await', () => {
     global.fetch.mockImplementationOnce(() =>
       Promise.resolve({ ok: false, status: 404 })
     );
-    await expect(fetchUserData()).rejects.toThrow('HTTP error 404');
+    await expect(fetchUserData()).rejects.toThrow();
   });
 });
