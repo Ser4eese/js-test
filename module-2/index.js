@@ -1,6 +1,7 @@
-function isEven(num) {
-    //пишем сюда
-    return //что-то;
+function checkAccess(age, isPremium) {
+    // Ваш код здесь
+    // Проверьте возраст и статус премиум-пользователя
+    // Верните соответствующую строку
 }
 
-module.exports = isEven;
+module.exports = checkAccess;
