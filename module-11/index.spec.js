@@ -1,17 +1,7 @@
-const createPromise = require('./index');
-
-describe('Базовый Promise', () => {
-  vi.useFakeTimers();
-
-  test('Промис резолвится корректно', () => {
-    const promise = createPromise();
-    vi.advanceTimersByTime(1000);
-    return expect(promise).resolves.toBe('Promise resolved!');
-  });
-
-  test('Промис реджектится при success = false', () => {
-    const promise = createPromise(false);
-    vi.advanceTimersByTime(1000);
-    return expect(promise).rejects.toThrow('Promise rejected!');
+describe("Модуль 11: Git — основы", () => {
+  test("Теоретический модуль — пройдите тренажёр learngitbranching.js.org", () => {
+    // Это теоретический модуль без автоматических тестов
+    // Задание: пройти https://learngitbranching.js.org/?locale=ru_RU
+    expect(true).toBe(true);
   });
 });

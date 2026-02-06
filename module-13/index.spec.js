@@ -1,24 +1,61 @@
-const fetchUserData = require('./index');
+const { asyncOperation } = require("./index.js");
 
-describe('Async/Await', () => {
+describe("Модуль 13: Callbacks", () => {
   beforeEach(() => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ id: 1, name: 'John' }),
-      })
-    );
+    vi.useFakeTimers();
   });
 
-  test('Успешный запрос', async () => {
-    const user = await fetchUserData();
-    expect(user).toEqual({ id: 1, name: 'John' });
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
-  test('Обработка ошибки', async () => {
-    global.fetch.mockImplementationOnce(() =>
-      Promise.resolve({ ok: false, status: 404 })
-    );
-    await expect(fetchUserData()).rejects.toThrow();
+  test("Вызывает callback через 100мс", () => {
+    const callback = vi.fn();
+
+    asyncOperation(true, callback);
+
+    expect(callback).not.toHaveBeenCalled();
+
+    vi.advanceTimersByTime(100);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  test("При успехе передаёт null и результат", () => {
+    const callback = vi.fn();
+
+    asyncOperation(true, callback);
+    vi.advanceTimersByTime(100);
+
+    expect(callback).toHaveBeenCalledWith(null, "Операция успешна");
+  });
+
+  test("При ошибке передаёт Error и null", () => {
+    const callback = vi.fn();
+
+    asyncOperation(false, callback);
+    vi.advanceTimersByTime(100);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    const [error, result] = callback.mock.calls[0];
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe("Операция не удалась");
+    expect(result).toBeNull();
+  });
+
+  test("Работает с разными значениями shouldSucceed", () => {
+    const successCallback = vi.fn();
+    const errorCallback = vi.fn();
+
+    asyncOperation(true, successCallback);
+    asyncOperation(false, errorCallback);
+
+    vi.advanceTimersByTime(100);
+
+    expect(successCallback).toHaveBeenCalledWith(null, "Операция успешна");
+
+    const [error] = errorCallback.mock.calls[0];
+    expect(error).toBeInstanceOf(Error);
   });
 });

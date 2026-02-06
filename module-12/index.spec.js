@@ -1,33 +1,46 @@
-const processData = require('./index');
+const fs = require("fs");
+const path = require("path");
 
-describe.skip('Цепочка промисов', () => {
-  beforeEach(() => {
-    // tell vitest we use mocked time
-    vi.useFakeTimers({ shouldAdvanceTime: true })
-  })
-  afterEach(() => {
-    vi.runOnlyPendingTimers();
-    // restoring date after each test run
-    vi.useRealTimers()
-  })
-  test('Успешная обработка числа 3', async () => {
+describe("Модуль 12: npm и package.json", () => {
+  const projectPath = path.join(__dirname, "my-project");
 
-    const promise = processData(3); // Запускаем функцию
-    vi.advanceTimersByTime(600); // Пропускаем 500 мс (первый setTimeout)
-    vi.advanceTimersByTime(300); // Пропускаем еще 300 мс (второй setTimeout)
-
-    const result = await promise; // Ждем завершения промиса
-    expect(result).toBe(5); // Проверяем результат
-
+  test("Создана папка my-project", () => {
+    expect(fs.existsSync(projectPath)).toBe(true);
   });
 
-  test('Ошибка при числе 0', async () => {
+  test("Существует package.json", () => {
+    const packageJsonPath = path.join(projectPath, "package.json");
+    expect(fs.existsSync(packageJsonPath)).toBe(true);
+  });
 
-    const promise = processData(0); // Запускаем функцию
-    vi.advanceTimersByTime(600); // Пропускаем 500 мс
-    vi.advanceTimersByTime(300); // Пропускаем еще 300 мс
+  test("Установлена хотя бы одна зависимость", () => {
+    const packageJsonPath = path.join(projectPath, "package.json");
 
-    await expect(promise).rejects.toThrowError('Result must be positive'); // Проверяем ошибку
+    if (!fs.existsSync(packageJsonPath)) {
+      throw new Error("package.json не найден");
+    }
 
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+    const deps = packageJson.dependencies || {};
+
+    expect(Object.keys(deps).length).toBeGreaterThan(0);
+  });
+
+  test("Существует index.js", () => {
+    const indexPath = path.join(projectPath, "index.js");
+    expect(fs.existsSync(indexPath)).toBe(true);
+  });
+
+  test("В package.json есть скрипт start", () => {
+    const packageJsonPath = path.join(projectPath, "package.json");
+
+    if (!fs.existsSync(packageJsonPath)) {
+      throw new Error("package.json не найден");
+    }
+
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+    const scripts = packageJson.scripts || {};
+
+    expect(scripts.start).toBeDefined();
   });
 });

@@ -1,9 +1,12 @@
-const http = require("http");
+/**
+ * createPromise — создаёт Promise с задержкой
+ *
+ * @param {boolean} shouldResolve - true для resolve, false для reject
+ * @param {number} delay - задержка в миллисекундах
+ * @returns {Promise} Promise, который resolve/reject через delay мс
+ */
+function createPromise(shouldResolve, delay) {
+  // Ваш код здесь
+}
 
-const server = http.createServer((req, res) => {
-  const { url } = req;
-  res.setHeader("Content-Type", "text/plain")
-  // Пишем маршрутизацию тут
-});
-
-server.listen(3001);
+module.exports = { createPromise };

@@ -1,47 +1,27 @@
-const http = require("http");
-const sqlite3 = require("sqlite3").verbose();
-const url = require("url");
+/**
+ * Модуль 17: HTML основы
+ *
+ * Задание: Напишите функцию createHTML, которая генерирует
+ * HTML-разметку карточки пользователя.
+ */
 
-const db = new sqlite3.Database("./database.db");
-db.serialize(() => {
- // создать таблицу в БД, если её нет
-});
+/**
+ * createHTML — создаёт HTML-разметку карточки пользователя
+ *
+ * @param {Object} user - объект пользователя
+ * @param {string} user.name - имя пользователя
+ * @param {string} user.email - email пользователя
+ * @param {string} user.avatar - URL аватара
+ * @returns {string} - HTML-разметка карточки
+ */
+function createHTML(user) {
+  // Ваш код здесь
+}
 
-const server = http.createServer((req, res) => {
-  const { method, url: reqUrl } = req;
-  const parsedUrl = url.parse(reqUrl, true);
-  //Здесь нужно указать заголовки чтобы CORS не ругался
-  
-  // Обработка OPTIONS-запросов (CORS)
-  if (method === "OPTIONS") {
-    // здесь то же сто то сделать чтобы CORS не ругался
-    return;
-  }
-
-  // POST /register
-  if (method === "POST" && parsedUrl.pathname === "/register") {
-    let body = "";
-
-    req.on("data", (chunk) => {
-      body += chunk.toString();
-    });
-
-    req.on("end", () => {
-      //Распарсить тело запроса и сохранить в базу
-    });
-    return;
-  }
-
-  // GET /users
-  if (method === "GET" && parsedUrl.pathname === "/users") {
-    // Получить всех пользователей из базы
-    return;
-  }
-
-  res.writeHead(404);
-  res.end("Not Found");
-});
-
-server.listen(3003, () => {
-  console.log("Сервер запущен на порту 3003");
-});
+// Экспорт для Node.js (тесты) и браузера
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { createHTML };
+}
+if (typeof window !== 'undefined') {
+  window.createHTML = createHTML;
+}
